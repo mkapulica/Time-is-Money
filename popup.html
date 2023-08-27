@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Settings</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            width: 360px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+            overflow-x: hidden;  /* hide horizontal scrollbar */
+            overflow-y: auto;   /* allow vertical scrollbar only when necessary */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            font-weight: 600;
+            color: #444;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input[type="number"]:hover {
+            border: 1px solid #999;
+        }
+
+        input[type="number"]:focus {
+            border: 1 solid #555;
+        }
+
+        input[type="checkbox"] {
+            margin-left: 10px;
+            transform: scale(1.3);
+            vertical-align: middle;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0px 0px 5px #007BFF;
+        }
+</style>
+</head>
+<body>
+    <label>
+        Monthly Income:
+        <input type="number" id="monthlyIncome">
+    </label>
+    <label>
+        Weekly Workdays (1-7):
+        <input type="number" id="weeklyWorkdays">
+    </label>
+    <label>
+        Daily Work Hours (1-24):
+        <input type="number" id="dailyWorkHours">
+    </label>
+    <label>
+        Daily Commute (in minutes):
+        <input type="number" id="dailyCommuteMinutes">
+    </label>
+    <label>
+        Monthly Commute Cost:
+        <input type="number" id="monthlyCommuteCost">
+    </label>
+    <label>
+        Vacation Days:
+        <input type="number" id="vacationDays">
+    </label>
+    <label>
+        On/Off:
+        <input type="checkbox" id="onOffSwitch">
+    </label>
+    <p>You only have about <strong>487</strong> usable hours per month. Spend them wisely.</p>
+    <button id="save">Save</button>
+</body>
+</html>
+<script src="popup.js"></script>
