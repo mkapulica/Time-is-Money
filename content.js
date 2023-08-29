@@ -20,7 +20,7 @@ async function getHourWorthFromStorage() {
                 resolve(computeHourWorth(data.settings));
             } else {
                 reject("No settings found.");
-            }
+                            }
         });
     });
 }
@@ -41,35 +41,39 @@ function computeMonthlyWorkHours(weeklyWorkdays, dailyWorkHours, dailyCommuteMin
 
 function parsePrice(priceStr) {
     const [currencySymbol] = priceStr.match(/[£€$¥₹₽]|Rs\.?/) || [null];
-    let cleaned = cleanPriceString(priceStr);
+    let cleaned = removeCurrencySymbols(priceStr);
+    cleaned = normalizeDelimiters(cleaned);
     return {
         value: parseFloat(cleaned),
         currency: currencySymbol
     };
 }
 
-function cleanPriceString(priceStr) {
-  let cleaned = priceStr.replace(/[£€$¥₹₽]|Rs\.?/g, "").trim();
-  const delimiters = new Set(cleaned.match(/[.,]/g));
+function removeCurrencySymbols(priceStr) {
+    return priceStr.replace(/[£€$¥₹₽]|Rs\.?/g, "").trim();
+}
+
+function normalizeDelimiters(priceStr) {
+  const delimiters = new Set(priceStr.match(/[.,]/g));
 
   if (delimiters.has('.')) {
-      if (cleaned.indexOf('.') !== cleaned.lastIndexOf('.') || cleaned.endsWith('.')) {
-          cleaned = cleaned.replace(/\./g, "");
+      if (priceStr.indexOf('.') !== priceStr.lastIndexOf('.') || priceStr.endsWith('.')) {
+          priceStr = priceStr.replace(/\./g, "");
       }
-      if (cleaned.lastIndexOf(".") < cleaned.lastIndexOf(",")) {
-          cleaned = cleaned.replace(/\./g, "").replace(/,/g, ".");
+      if (priceStr.lastIndexOf(".") < priceStr.lastIndexOf(",")) {
+          priceStr = priceStr.replace(/\./g, "").replace(/,/g, ".");
       }
   }
 
   if (delimiters.has(',')) {
-      if (cleaned.indexOf(',') !== cleaned.lastIndexOf(',') || cleaned.endsWith(',')) {
-          cleaned = cleaned.replace(/,/g, "");
+      if (priceStr.indexOf(',') !== priceStr.lastIndexOf(',') || priceStr.endsWith(',')) {
+          priceStr = priceStr.replace(/,/g, "");
       } else {
-          cleaned = cleaned.replace(/,/g, ".");
+          priceStr = priceStr.replace(/,/g, ".");
       }
   }
 
-  return cleaned;
+  return priceStr;
 }
 
 function convertToEUR(amount, currency) {
