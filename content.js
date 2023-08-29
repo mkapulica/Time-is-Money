@@ -3,6 +3,9 @@ const CONVERSION_RATES_TO_EUR = {
     '£': 0.85, '€': 1, '$': 0.90, '¥': 0.008, '₹': 0.011, '₽': 0.011, 'Rs': 0.011
 };
 const DAYS_IN_YEAR = 365.25;
+const MONTHS_IN_YEAR = 12.0;
+const DAYS_IN_WEEK = 7.0;
+const MINUTES_IN_HOUR = 60.0;
 
 let hourWorth = null;
 
@@ -33,7 +36,7 @@ function computeHourWorth(settings) {
 }
 
 function computeMonthlyWorkHours(weeklyWorkdays, dailyWorkHours, dailyCommuteMinutes, vacationDays) {
-    return ((DAYS_IN_YEAR - vacationDays) / 12 / 7) * weeklyWorkdays * (dailyWorkHours + (dailyCommuteMinutes / 60));
+    return ((DAYS_IN_YEAR - vacationDays) / MONTHS_IN_YEAR / DAYS_IN_WEEK) * weeklyWorkdays * (dailyWorkHours + (dailyCommuteMinutes / MINUTES_IN_HOUR));
 }
 
 function parsePrice(priceStr) {
@@ -92,19 +95,34 @@ async function replaceText(node) {
   }
 }
 
+function revertToOriginalText(node) {
+    if (node.nodeType === Node.TEXT_NODE && node.dataOriginalContent) {
+        node.textContent = node.dataOriginalContent;
+        node.dataOriginalContent = null;
+    } else {
+        Array.from(node.childNodes).forEach(revertToOriginalText);
+    }
+}
+
+async function isExtensionEnabled() {
+    const { settings } = await browser.storage.local.get('settings');
+    return settings && settings['onOffSwitch'];
+}
+
 async function changeValues() {
-    await refreshHourWorth();
-    replaceText(document.body);
+    if (await isExtensionEnabled()) {
+        await refreshHourWorth();
+        replaceText(document.body);
+    } else {
+        revertToOriginalText(document.body);
+    }
 }
 
 changeValues();
 
 browser.runtime.onMessage.addListener(async request => {
     if (request.action === "settingsUpdated") {
-        const data = await browser.storage.local.get('settings');
-        if (data.settings) {
-            await changeValues();
-        }
+        await changeValues();
     }
 });
 

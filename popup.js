@@ -5,7 +5,8 @@ const SETTING_NAMES = [
     'dailyWorkHours', 
     'dailyCommuteMinutes', 
     'monthlyCommuteCost', 
-    'vacationDays'
+    'vacationDays',
+    'onOffSwitch'
 ];
 
 function isCheckbox(element) {
@@ -30,7 +31,7 @@ function setSettingValue(settingName, value) {
 }
 
 function gatherSettings() {
-    return SETTING_NAMES.concat(['onOffSwitch']).reduce((settings, name) => {
+    return SETTING_NAMES.reduce((settings, name) => {
         settings[name] = getSettingValue(name);
         return settings;
     }, {});
