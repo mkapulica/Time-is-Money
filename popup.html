@@ -1,148 +1,154 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Settings</title>
     <style>
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f7f8fa;
-    color: #2c3e50;
-    padding: 1.5rem;
-    line-height: 1.4;
-    width: 320px;
-    margin: 0 auto;
-    font-size: 1rem;  /* Increased font size */
-    overflow-x: hidden;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f8fa;
+            color: #2c3e50;
+            padding: 1.5rem;
+            line-height: 1.4;
+            width: 320px;
+            margin: 0 auto;
+            font-size: 1rem;  /* Increased font size */
+            overflow-x: hidden;
+        }
 
-fieldset {
-    border: none;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    background-color: #ffffff;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
+        fieldset {
+            border: none;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            background-color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
 
-legend {
-    font-weight: bold;
-    color: #2c3e50;
-    padding: 0 0.8rem;
-    font-size: 1.1rem;  /* Increased font size */
-}
+        legend {
+            font-weight: bold;
+            color: #2c3e50;
+            padding: 0 0.8rem;
+            font-size: 1.1rem;  /* Increased font size */
+        }
 
-label {
-    display: block;
-    margin-bottom: 0.7rem;
-    font-weight: 500;
-    color: #5c6f7f;
-    font-size: 1rem;  /* Increased font size */
-}
+        label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 500;
+            color: #5c6f7f;
+            font-size: 1rem;  /* Increased font size */
+        }
 
-input[type="number"], input[type="checkbox"] {
-    margin-top: 0.2rem;
-}
+        input[type="number"],
+        input[type="checkbox"] {
+            margin-top: 0.2rem;
+        }
 
-input[type="number"] {
-    width: calc(100% - 1.5rem);
-    padding: 0.4rem 0.7rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    font-size: 1rem;  /* Increased font size */
-    color: #555;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
+        input[type="number"] {
+            width: calc(100% - 1.5rem);
+            padding: 0.4rem 0.7rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 1rem;  /* Increased font size */
+            color: #555;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
 
-input[type="number"]:focus {
-    border-color: #007BFF;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+        input[type="number"]:focus {
+            border-color: #007BFF;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
 
-input[type="checkbox"] {
-    margin-left: 0.5rem;
-    transform: scale(1.2);
-}
+        input[type="checkbox"] {
+            margin-left: 0.5rem;
+            transform: scale(1.2);
+        }
 
-p {
-    margin-bottom: 0.8rem;
-    font-size: 1rem;  /* Increased font size */
-    color: #5c6f7f;
-}
+        p {
+            margin-bottom: 0.8rem;
+            font-size: 1rem;  /* Increased font size */
+            color: #5c6f7f;
+        }
 
-strong {
-    color: #2c3e50;
-    font-size: 1rem;  /* Increased font size */
-}
+        strong {
+            color: #2c3e50;
+            font-size: 1rem;  /* Increased font size */
+        }
 
-button {
-    display: block;
-    width: 100%;
-    padding: 0.6rem 0.8rem;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;  /* Increased font size */
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
+        button {
+            display: block;
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;  /* Increased font size */
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
 
-button:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+        button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-button:focus {
-    outline: none;
-    box-shadow: 0px 0px 4px #007BFF;
-}
+        button:focus {
+            outline: none;
+            box-shadow: 0px 0px 4px #007BFF;
+        }
 
-#feedbackMessage {
-    font-size: 1rem;  /* Increased font size */
-    color: #5c6f7f;
-}
-</style>
+        #feedbackMessage {
+            font-size: 1rem;  /* Increased font size */
+            color: #5c6f7f;
+        }
+    </style>
 </head>
+
 <body>
-    <fieldset>
-        <legend>Work Details</legend>
-        <label>
-            Monthly Income:
-            <input type="number" id="monthlyIncome" min="0" placeholder="e.g. 2500">
-        </label>
-        <label>
-            Weekly Workdays:
-            <input type="number" id="weeklyWorkdays" min="1" max="7" placeholder="1-7">
-        </label>
-        <label>
-            Daily Work Hours:
-            <input type="number" id="dailyWorkHours" min="1" max="24" placeholder="1-24">
-        </label>
-        <label>
-            Daily Commute (in minutes):
-            <input type="number" id="dailyCommuteMinutes" min="0" max="600" placeholder="e.g. 60">
-        </label>
-        <label>
-            Monthly Commute Cost:
-            <input type="number" id="monthlyCommuteCost" min="0" placeholder="e.g. 50">
-        </label>
-        <label>
-            Vacation Days:
-            <input type="number" id="vacationDays" min="0" max="200" placeholder="e.g. 20">
-        </label>
-    </fieldset>
-    <fieldset>
-        <legend>Extension Settings</legend>
-        <label>
-            Enable Extension:
-            <input type="checkbox" id="onOffSwitch">
-        </label>
-    </fieldset>
-    <p>You only have about <strong>487</strong> usable hours per month. Spend them wisely.</p>
-    <button id="save">Save</button>
+    <form id="settingsForm">
+        <fieldset>
+            <legend>Work Details</legend>
+            <label>
+                Monthly Income:
+                <input type="number" id="monthlyIncome" min="0" placeholder="e.g. 2500" required>
+            </label>
+            <label>
+                Weekly Workdays:
+                <input type="number" id="weeklyWorkdays" min="1" max="7" placeholder="1-7" required>
+            </label>
+            <label>
+                Daily Work Hours:
+                <input type="number" id="dailyWorkHours" min="1" max="24" placeholder="1-24" required>
+            </label>
+            <label>
+                Daily Commute (in minutes):
+                <input type="number" id="dailyCommuteMinutes" min="0" max="600" placeholder="e.g. 60" required>
+            </label>
+            <label>
+                Monthly Commute Cost:
+                <input type="number" id="monthlyCommuteCost" min="0" placeholder="e.g. 50" required>
+            </label>
+            <label>
+                Vacation Days:
+                <input type="number" id="vacationDays" min="0" max="200" placeholder="e.g. 20" required>
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Extension Settings</legend>
+            <label>
+                Enable Extension:
+                <input type="checkbox" id="onOffSwitch">
+            </label>
+        </fieldset>
+        <p>You only have about <strong>487</strong> usable hours per month. Spend them wisely.</p>
+        <button type="submit" id="save">Save</button>
+    </form>
     <p id="feedbackMessage" style="color: green;"></p>
 </body>
+
 </html>
 <script src="popup.js"></script>

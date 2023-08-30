@@ -57,9 +57,12 @@ function applyStoredSettingsToPage() {
     });
 }
 
-document.getElementById('save').addEventListener('click', () => {
+document.getElementById('settingsForm').addEventListener('submit', function(event) {
+    // Prevent the form from actually submitting
+    event.preventDefault();
+  
     const settings = gatherSettings();
     saveSettingsToStorage(settings);
-});
+  });
 
 document.addEventListener('DOMContentLoaded', applyStoredSettingsToPage);
