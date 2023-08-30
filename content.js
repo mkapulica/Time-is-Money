@@ -1,4 +1,4 @@
-const PRICE_REGEX = /(?:(?<=\s)|^)(?:(?:[£€$¥₹₽]|Rs\.?)\s*\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{0,2})?|\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{0,2})?\s*(?:[£€$¥₹₽]|Rs\.?))(?:(?=\s)|$)/g;
+const PRICE_REGEX = /(?:(?<=\s)|^)(?:(?:[£€$¥₹₽]|Rs\.?)\s*\d{1,3}(?:[,.\s]\d{3})*(?:[.,]\d{0,2})?|\d{1,3}(?:[,.\s]\d{3})*(?:[.,]\d{0,2})?\s*(?:[£€$¥₹₽]|Rs\.?))(?:(?=\s)|$)/g;
 const CONVERSION_RATES_TO_EUR = {
     '£': 0.85, '€': 1, '$': 0.90, '¥': 0.008, '₹': 0.011, '₽': 0.011, 'Rs': 0.011
 };
@@ -55,6 +55,8 @@ function removeCurrencySymbols(priceStr) {
 
 function normalizeDelimiters(priceStr) {
     let cleaned = priceStr.replace(/[£€$¥₹₽]|Rs\.?/g, "").trim();
+    
+    cleaned = cleaned.replace(/ /g, "");
 
     if (cleaned.includes(".") && cleaned.includes(",")) {
         if (cleaned.lastIndexOf(".") > cleaned.lastIndexOf(",")) {
