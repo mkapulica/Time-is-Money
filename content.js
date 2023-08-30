@@ -54,26 +54,34 @@ function removeCurrencySymbols(priceStr) {
 }
 
 function normalizeDelimiters(priceStr) {
-  const delimiters = new Set(priceStr.match(/[.,]/g));
+    let cleaned = priceStr.replace(/[£€$¥₹₽]|Rs\.?/g, "").trim();
 
-  if (delimiters.has('.')) {
-      if (priceStr.indexOf('.') !== priceStr.lastIndexOf('.') || priceStr.endsWith('.')) {
-          priceStr = priceStr.replace(/\./g, "");
-      }
-      if (priceStr.lastIndexOf(".") < priceStr.lastIndexOf(",")) {
-          priceStr = priceStr.replace(/\./g, "").replace(/,/g, ".");
-      }
-  }
-
-  if (delimiters.has(',')) {
-      if (priceStr.indexOf(',') !== priceStr.lastIndexOf(',') || priceStr.endsWith(',')) {
-          priceStr = priceStr.replace(/,/g, "");
-      } else {
-          priceStr = priceStr.replace(/,/g, ".");
-      }
-  }
-
-  return priceStr;
+    if (cleaned.includes(".") && cleaned.includes(",")) {
+        if (cleaned.lastIndexOf(".") > cleaned.lastIndexOf(",")) {
+            // Dot is the decimal, comma is the thousands separator.
+            cleaned = cleaned.replace(/,/g, "");
+        } else {
+            // Comma is the decimal, dot is the thousands separator.
+            cleaned = cleaned.replace(/\./g, "").replace(/,/g, ".");
+        }
+    } else if (cleaned.includes(",")) {
+        if ((cleaned.match(/,/g) || []).length > 1 || cleaned.endsWith(",")) {
+            // Comma is the thousands separator.
+            cleaned = cleaned.replace(/,/g, "");
+        } else {
+            // Comma is the decimal separator.
+            cleaned = cleaned.replace(/,/g, ".");
+        }
+    } else if (cleaned.includes(".")) {
+        const dotPosition = cleaned.indexOf(".");
+        if ((cleaned.match(/\./g) || []).length > 1 || cleaned.endsWith(".") || cleaned.substring(dotPosition + 1).length > 2) {
+            // Dot is the thousands separator.
+            cleaned = cleaned.replace(/\./g, "");
+        }
+        // If it's just one dot, not at the end, and less than 3 digits after it, it's a decimal.
+    }
+    
+    return cleaned;
 }
 
 function convertToEUR(amount, currency) {
