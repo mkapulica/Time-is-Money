@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "Price Replacer",
+    "name": "Time is Money",
     "version": "1.0",
-    "description": "Replaces prices on web pages",
+    "description": "Replaces prices on web pages with time spent on work",
     "permissions": ["activeTab", "webNavigation", "storage", "<all_urls>", "tabs"],
     "background": {
       "scripts": ["background.js"],
