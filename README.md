@@ -1,4 +1,5 @@
 # Time-is-Money
+
 🔥🦊 Firefox extension that converts displayed prices to equivalent hours of your life, factoring in salary, work hours, vacation, commute time and commute cost.
 
 ## Overview
