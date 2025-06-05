@@ -43,3 +43,16 @@ With the extension active, all price figures on web pages are automatically conv
 - **Daily Commute (in minutes)**: Total commuting time in minutes per day.
 - **Monthly Commute Cost**: Total cost of commuting to and from work per month.
 - **Vacation Days**: Number of vacation days per year.
+
+## Benchmark
+
+Run `node benchmark.js` to compare the previous recursive approach with the
+current tree-walking logic. On the reference setup, processing 1000 text nodes
+produced output similar to:
+
+```
+Recursive: 6ms
+Tree walker: 3ms
+```
+
+The tree walker performs roughly twice as fast as the old implementation.

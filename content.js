@@ -90,32 +90,68 @@ function convertToEUR(amount, currency) {
     return amount * (CONVERSION_RATES_TO_EUR[currency] || 1);
 }
 
-async function replaceText(node) {
-  if (node.nodeType === Node.TEXT_NODE && !(node.parentNode && node.parentNode.nodeName === 'TEXTAREA')) {
-      const originalContent = node.dataOriginalContent || node.textContent;
-      
-      const replacedContent = originalContent.replace(PRICE_REGEX, match => {
-          const { value, currency } = parsePrice(match);
-          const convertedValue = convertToEUR(value, currency) / hourWorth;
-          return `${convertedValue.toFixed(2)} h`;
-      });
+const IGNORE_TAGS = ['TEXTAREA', 'INPUT', 'SCRIPT', 'STYLE', 'NOSCRIPT'];
 
-      if (replacedContent !== originalContent) {
-          node.dataOriginalContent = originalContent;
-          node.textContent = replacedContent;
-      }
-  } else {
-      Array.from(node.childNodes).forEach(replaceText);
-  }
+function walkTextNodes(root, cb) {
+    if (root.nodeType === Node.TEXT_NODE) {
+        const parentName = root.parentNode && root.parentNode.nodeName;
+        if (!parentName || !IGNORE_TAGS.includes(parentName)) {
+            cb(root);
+        }
+        return;
+    }
+
+    const walker = document.createTreeWalker(
+        root,
+        NodeFilter.SHOW_TEXT,
+        {
+            acceptNode: n => {
+                const pName = n.parentNode && n.parentNode.nodeName;
+                if (pName && IGNORE_TAGS.includes(pName)) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        },
+        false
+    );
+
+    let current;
+    while ((current = walker.nextNode())) {
+        cb(current);
+    }
+}
+
+function processTextNode(textNode) {
+    const originalContent = textNode.dataOriginalContent || textNode.nodeValue;
+
+    if (originalContent.search(PRICE_REGEX) === -1) {
+        return;
+    }
+
+    const replacedContent = originalContent.replace(PRICE_REGEX, match => {
+        const { value, currency } = parsePrice(match);
+        const convertedValue = convertToEUR(value, currency) / hourWorth;
+        return `${convertedValue.toFixed(2)} h`;
+    });
+
+    if (replacedContent !== originalContent) {
+        textNode.dataOriginalContent = originalContent;
+        textNode.nodeValue = replacedContent;
+    }
+}
+
+function replaceText(node) {
+    walkTextNodes(node, processTextNode);
 }
 
 function revertToOriginalText(node) {
-    if (node.nodeType === Node.TEXT_NODE && node.dataOriginalContent) {
-        node.textContent = node.dataOriginalContent;
-        node.dataOriginalContent = null;
-    } else {
-        Array.from(node.childNodes).forEach(revertToOriginalText);
-    }
+    walkTextNodes(node, textNode => {
+        if (textNode.dataOriginalContent) {
+            textNode.nodeValue = textNode.dataOriginalContent;
+            textNode.dataOriginalContent = null;
+        }
+    });
 }
 
 async function isExtensionEnabled() {
